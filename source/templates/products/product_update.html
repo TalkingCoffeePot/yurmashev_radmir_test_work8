@@ -1,0 +1,11 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Detailed{% endblock %}
+{% block style %}{% static 'css/add_style.css' %}{% endblock %}
+{% block content %}
+<h1>Редактирование продукта</h1>
+<form action="" method="post">
+    {% include 'partial/form.html' with button_text='Update' %}
+</form>
+{% endblock %}

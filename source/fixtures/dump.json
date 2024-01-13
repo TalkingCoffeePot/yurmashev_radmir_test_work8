@@ -1,0 +1,42 @@
+[
+{
+  "model": "products.products",
+  "pk": 1,
+  "fields": {
+    "title": "Poco F1 6/64",
+    "category": "s",
+    "description": "dwdwdadwdadsadwdas",
+    "image": "products/pocof1.jpg"
+  }
+},
+{
+  "model": "products.products",
+  "pk": 2,
+  "fields": {
+    "title": "Lenovo G780f",
+    "category": "l",
+    "description": "regawegeargsrehgsrbh rdthrstdvhrtsdhsdrtvhdrbg",
+    "image": "products/g780.jpg"
+  }
+},
+{
+  "model": "products.products",
+  "pk": 3,
+  "fields": {
+    "title": "RTX 4060",
+    "category": "g",
+    "description": "Мечта...",
+    "image": "products/rtx4060.jpg"
+  }
+},
+{
+  "model": "products.products",
+  "pk": 4,
+  "fields": {
+    "title": "ddddddd",
+    "category": "s",
+    "description": "fdsfsefefgesgbsbgsdfbg",
+    "image": "products/5ec326fab909b0546561d8277acfa384.jpg"
+  }
+}
+]

@@ -1,7 +1,7 @@
-from django.forms import forms
+from django.forms import ModelForm
 from products.models import Products, Review
 
-class ProductForm(forms.Form):
+class ProductForm(ModelForm):
     class Meta:
         model = Products
         fields = [
@@ -11,10 +11,12 @@ class ProductForm(forms.Form):
             'image',
         ]
 
-class ReviewForm(forms.Form):
+class ReviewForm(ModelForm):
     class Meta:
-        model =Review
+        model = Review
         fields = [
+            'author',
+            'product',
             'text',
             'rate',
         ]

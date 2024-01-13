@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Main Page{% endblock %}
+{% block style %}{% static 'css/main_style.css' %}{% endblock %}
+{% block content %}
+        <h1>Отзовик "Отзовись!"</h1>
+
+        <div class="row prod_container justify-content-between">
+            {% for product in products %}
+            <div class="col-4 card" style="width: 18rem; margin-bottom: 3%">
+                <img src="{{product.image.url}}" class="card-img-top" alt="...">
+                <div class="card-body">
+                    <p class="card-text">{{product.category}}</p>
+                    <h5 class="card-title">{{product.title}}</h5>
+                    <p class="card-text">{{product.description}}</p>
+                    <a href="{% url 'detailed_product' product.pk %}" class="btn btn-primary">Подробнее</a>
+                </div>
+              </div>
+                {% empty %}
+                <p>Товары не найдены</p>
+            {% endfor %}
+        </div>
+{% endblock %}
