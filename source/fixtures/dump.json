@@ -38,5 +38,44 @@
     "description": "fdsfsefefgesgbsbgsdfbg",
     "image": "products/5ec326fab909b0546561d8277acfa384.jpg"
   }
+},
+{
+  "model": "products.review",
+  "pk": 19,
+  "fields": {
+    "author": 1,
+    "product": 1,
+    "text": "говно",
+    "rate": 5,
+    "moderate": true,
+    "date_add": "2024-01-13",
+    "date_edit": "2024-01-13"
+  }
+},
+{
+  "model": "products.review",
+  "pk": 20,
+  "fields": {
+    "author": 1,
+    "product": 1,
+    "text": "sgsfdgfdsg",
+    "rate": 4,
+    "moderate": false,
+    "date_add": "2024-01-13",
+    "date_edit": "2024-01-13"
+  }
+},
+{
+  "model": "products.review",
+  "pk": 21,
+  "fields": {
+    "author": 1,
+    "product": 1,
+    "text": "ggg",
+    "rate": 1,
+    "moderate": false,
+    "date_add": "2024-01-14",
+    "date_edit": "2024-01-14"
+  }
 }
 ]

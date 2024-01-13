@@ -1,3 +1,4 @@
+from typing import Any
 from django.shortcuts import render
 from django.urls import reverse, reverse_lazy
 from django.http import HttpResponse, HttpResponseRedirect
@@ -14,24 +15,36 @@ class ProductListView(ListView):
     context_object_name = 'products'
     model = Products
 
-class ProductDetailedView(FormView, DetailView):
+class ProductDetailedView(FormMixin, DetailView):
     template_name = 'products/product_detailed.html'
     model = Products
     form_class = ReviewForm
     context_object_name = 'product'
     pk_url_kwarg = 'product_pk'
 
+    def get_context_data(self, **kwargs: Any) -> dict[str, Any]:
+        
+        context = super().get_context_data(**kwargs)
+        context['product'] = self.get_object()
+        return context
+
+    def get_success_url(self, **kwargs) -> str:
+        return reverse_lazy('detailed_product', kwargs={'product_pk': self.get_object().id})
+    
     def post(self, request, *args, **kwargs):
         form = self.get_form()
         print(kwargs)
         if form.is_valid():
-            print(request.user.id)
-            form.save(commit=False)
-            form.author = request.user.id
-            form.product = get_object_or_404(Products, pk=self.kwargs.get('product_pk'))
-            print('yes')
-            form.save()
-        return reverse_lazy('detailed_product', pk=self.kwargs.get('product_pk'))
+            return self.form_valid(form)
+        
+    def form_valid(self, form):
+        self.object = form.save(commit=False)
+        self.object.author = self.request.user
+        self.object.product = self.get_object()
+        print(self.get_object())
+        self.object.save()
+        return super().form_valid(form)
+
 
 class ProductCreateView(CreateView):
     template_name = 'products/product_create.html'
@@ -58,15 +71,3 @@ class ProductDeleteView(DeleteView):
     success_url = reverse_lazy('product_list')
     #permission_required = 'main_app.delete_projects'
 
-class ReviewView(View):
-    def post(self, request, *args, **kwargs):
-        form = ReviewForm(request.POST)
-        if form.is_valid():
-            product = Products.objects.filter(pk=self.kwargs.get('pk'))
-            comment = form.save(commit=False)
-            comment.author = request.user
-            comment.product = product
-            comment.save()
-            print(request)
-            return HttpResponse(status=200) 
-        return reverse('detailed_product', kwargs={'product_pk': product.id})

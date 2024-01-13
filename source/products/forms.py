@@ -1,4 +1,4 @@
-from django.forms import ModelForm
+from django.forms import ModelForm, TextInput, RadioSelect, Textarea
 from products.models import Products, Review
 
 class ProductForm(ModelForm):
@@ -12,6 +12,7 @@ class ProductForm(ModelForm):
         ]
 
 class ReviewForm(ModelForm):
+    RATE = [1, 2, 3, 4, 5]
     class Meta:
         model = Review
         fields = [
@@ -20,3 +21,12 @@ class ReviewForm(ModelForm):
             'text',
             'rate',
         ]
+        widgets = {
+            'text': Textarea(attrs={
+                'class': 'form-control',
+                'placeholder': 'Оставьте комментарий'
+            }),
+            'rate': RadioSelect(attrs={
+                'class': 'btn btn-primary'
+            })
+        }

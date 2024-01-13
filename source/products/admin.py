@@ -15,7 +15,7 @@ class ProductsAdmin(admin.ModelAdmin):
 @admin.register(Review)
 class ReviewAdmin(admin.ModelAdmin):
     list_display = [
-        'author',
+        'get_author',
         'product',
         'text',
         'rate',
@@ -25,7 +25,7 @@ class ReviewAdmin(admin.ModelAdmin):
     ]
     @admin.display(ordering='author__username')
     def get_author(self, obj):
-        return User.objects.get(id=obj.author).username
+        return User.objects.get(username=obj.author).id
     @admin.display(ordering='product__title')
     def get_product(self, obj):
         return Products.objects.get(id=obj.product).title

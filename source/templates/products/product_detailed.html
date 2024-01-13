@@ -4,15 +4,19 @@
 {% block title %}Main Page{% endblock %}
 {% block style %}{% static 'css/main_style.css' %}{% endblock %}
 {% block content %}
-        <h1>Отзовик "Отзовись!"</h1>
-
-        <div class="task_container">
-            <div class="card" style="width: 18rem;">
-                <img src="{{product.image.url}}" class="card-img-top" alt="...">
-                <div class="card-body">
-                    <p class="card-text">{{product.category}}</p>
-                    <h5 class="card-title">{{product.title}}</h5>
-                    <p class="card-text">{{product.description}}</p>
+        <div class="task_container mt-5">
+            <div class=" prod_card row">
+                <div class="col-6">
+                    <img src="{{product.image.url}}" class="img-thumbnail" alt="...">
+                </div>
+                
+                <div class="col-6">
+                    <p class="">{{product.category}}</p>
+                    <h5 class="">{{product.title}}</h5>
+                    <p class="">{{product.description}}</p>
+                </div>
+                <div class="col-6 mb-5">
+                    <h4>Средняя оценка: {{product.get_avg_rate}}</h4>
                     <a href="{% url 'update_product' product.pk %}" class="btn btn-primary">Редактировать</a>
                     <a href="{% url 'delete_product' product.pk %}" class="btn btn-danger">Удалить</a>
                 </div>
@@ -22,10 +26,15 @@
               <h3 id="write_comment">Написать комментарий</h3>
               <form method="post">
               {% csrf_token %}
-                <!-- <textarea name="text"></textarea>
-                <input type="number" name="rate"> -->
-                {{form.text}}
-                {{form.rate}}
+              <div class="row">
+                    <div class="col-10">
+                        {{form.text}}
+                    </div>
+                    <div class="col-2">
+                        {{form.rate}}
+                    </div>
+                </div>
+                
                 <button type="submit" class="btn btn-primary">Комментировать</button>
               </form>
           {% else %}
@@ -38,16 +47,22 @@
                   </div>
               </div>
               {% endif %}
+            
             <h2>Комментарии</h2>
+            <div class="prod_comments px-3">
             {% for review in product.p_review.all %}
+                {% if review.moderate %}
                 <div class="task_box">
-                    <span>{{review.author}}</span>
+                    <span class="fs-4 fw-medium">{{review.get_author}} | {{review.get_author.email}}</span>
                     <p>{{review.text}}</p>
                     <h4>Оценка: {{review.rate}}</h4>
                 </div>
                 <hr>
-                {% empty %}
+                {% endif %} 
+            {% empty %}
                 <p>Отзывов пока нет</p>
             {% endfor %}
+            </div>
+            
         </div>
 {% endblock %}
