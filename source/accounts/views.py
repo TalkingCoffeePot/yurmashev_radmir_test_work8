@@ -2,9 +2,9 @@ from django.shortcuts import render
 from django.contrib.auth import login, authenticate, logout
 from django.shortcuts import render, redirect
 from django.urls import reverse
-from django.views.generic import CreateView
 from django.contrib.auth.models import User
-from accounts.forms import NewUserForm
+from accounts.forms import NewUserForm, UserEditForm
+from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView, View
 # Create your views here.
 
 def login_view(request):
@@ -24,7 +24,7 @@ def login_view(request):
 
 def logout_view(request):
     logout(request)
-    return redirect('products')
+    return redirect('product_list')
 
 class UserRegisterView(CreateView):
     model = User
@@ -34,12 +34,26 @@ class UserRegisterView(CreateView):
     def form_valid(self, form):
         user = form.save()
         login(self.request, user)
-        return redirect(reverse('products'))
+        return redirect(reverse('product_list'))
     
     def get_success_url(self):
         next_url = self.request.GET.get('next')
         if not next_url:
             next_url = self.request.POST.get('next')
         if not next_url:
-            next_url = reverse('products')
+            next_url = reverse('products_list')
         return next_url
+    
+class UserProfile(ListView):
+    template_name = 'accounts/profile.html'
+    model = User
+
+class UserProfileEdit(UpdateView):
+    model = User
+    template_name = 'accounts/profile_edit.html'
+    pk_url_kwarg = 'user_pk'
+    form_class = UserEditForm
+    #permission_required = 'main_app.change_projects'
+
+    def get_success_url(self):
+        return reverse('accounts:profile', kwargs={'user_pk': self.object.pk})

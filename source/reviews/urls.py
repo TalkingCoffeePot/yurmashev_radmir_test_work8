@@ -16,7 +16,7 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
-from products.views import ProductListView, ProductDetailedView, ProductCreateView, ProductUpdateView, ProductDeleteView
+from products.views import ProductListView, ProductDetailedView, ProductCreateView, ProductUpdateView, ProductDeleteView, ReviewEdit, ReviewDelete, ModerateViews
 from django.conf import settings
 from django.conf.urls.static import static
 
@@ -29,5 +29,8 @@ urlpatterns = [
     path('products/create/', ProductCreateView.as_view(), name='product_create'),
     path('products/<int:product_pk>/update', ProductUpdateView.as_view(), name='update_product'),
     path('products/<int:product_pk>/delete', ProductDeleteView.as_view(), name='delete_product'),
-   # path('products/<int:product_pk>/new_comment', ReviewView.as_view(), name='new_comment')
+    path('products/<int:product_pk>/review/<int:review_pk>/edit', ReviewEdit.as_view(), name='review_edit'),
+    path('products/<int:product_pk>/review/<int:review_pk>/delete', ReviewDelete.as_view(), name='review_delete'),
+    path('reviews/moderation/', ModerateViews.as_view(), name='moderation')
+
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

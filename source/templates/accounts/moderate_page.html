@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Main Page{% endblock %}
+{% block style %}{% static 'css/main_style.css' %}{% endblock %}
+{% block content %}
+        <div class="task_container mt-5">
+
+            <h2>Отзывы на модерации: </h2>
+            <div class="prod_comments px-3">
+            {% for review in reviews %}
+                <div class="task_box">
+                    <span class="fs-4 fw-medium">{{review.get_author}} | {{review.get_author.email}}</span>
+                    <div class="fs-4 fw-medium">Продукт: {{review.product.title}}</div>
+                    <p>{{review.text}}</p>
+                    <h4>Оценка: {{review.rate}}</h4>
+                    <div class="col-6 mb-5">
+                        <a href="{% url 'review_edit' review.product.pk review.pk %}" class="btn btn-primary">Редактировать</a>
+                        <a href="{% url 'review_delete' review.product.pk review.pk %}" class="btn btn-danger">Удалить</a>
+                    </div>
+                </div>
+                <hr>
+            {% empty %}
+                <p>Отзывов пока нет</p>
+            {% endfor %}
+            </div>
+            
+        </div>
+{% endblock %}

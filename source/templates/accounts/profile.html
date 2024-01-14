@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Main Page{% endblock %}
+{% block style %}{% static 'css/main_style.css' %}{% endblock %}
+{% block content %}
+        <div class="task_container mt-5">
+            <span class="fs-4 fw-medium">{{user.username}} | {{user.email}}</span>
+            <a href="{% url 'accounts:profile_edit' user.pk %}" class="btn btn-primary">Редактировать профиль</a>
+
+            <h2>Оставленные комментарии</h2>
+            
+            <div class="prod_comments px-3">
+            {% for review in user.a_review.all %}
+                <div class="task_box">
+                    <span class="fs-4 fw-medium">Продукт: {{review.product.title}}</span>
+                    <p>{{review.text}}</p>
+                    <h4>Оценка: {{review.rate}}</h4>
+                    <div class="col-6 mb-5">
+                        <a href="{% url 'review_edit' review.product.pk review.pk %}" class="btn btn-primary">Редактировать</a>
+                        <a href="{% url 'review_delete' review.product.pk review.pk %}" class="btn btn-danger">Удалить</a>
+                    </div>
+                </div>
+                <hr>
+            {% empty %}
+                <p>Отзывов пока нет</p>
+            {% endfor %}
+            </div>
+            
+        </div>
+{% endblock %}

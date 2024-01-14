@@ -23,7 +23,6 @@ class ProductDetailedView(FormMixin, DetailView):
     pk_url_kwarg = 'product_pk'
 
     def get_context_data(self, **kwargs: Any) -> dict[str, Any]:
-        
         context = super().get_context_data(**kwargs)
         context['product'] = self.get_object()
         return context
@@ -41,7 +40,6 @@ class ProductDetailedView(FormMixin, DetailView):
         self.object = form.save(commit=False)
         self.object.author = self.request.user
         self.object.product = self.get_object()
-        print(self.get_object())
         self.object.save()
         return super().form_valid(form)
 
@@ -64,10 +62,33 @@ class ProductUpdateView(UpdateView):
         return reverse('detailed_product', kwargs={'product_pk': self.object.pk})
     
 class ProductDeleteView(DeleteView):
-    template_name = 'products/product_delete.html'
+    template_name = 'products/delete.html'
     pk_url_kwarg = 'product_pk'
     model = Products
     context_object_name = 'product'
     success_url = reverse_lazy('product_list')
     #permission_required = 'main_app.delete_projects'
 
+
+class ReviewEdit(UpdateView):
+    model = Review
+    template_name = 'products/review_edit.html'
+    pk_url_kwarg = 'review_pk'
+    form_class = ReviewForm
+    context_object_name = 'review'
+
+class ReviewDelete(DeleteView):
+    model = Review
+    template_name = 'products/delete.html'
+    pk_url_kwarg = 'review_pk'
+    context_object_name = 'review'
+
+    def get_success_url(self, **kwargs) -> str:
+        return reverse_lazy('detailed_product', kwargs={'product_pk': self.kwargs.get('product_pk')})
+    
+
+
+class ModerateViews(ListView):
+    template_name = 'accounts/moderate_page.html'
+    context_object_name = 'reviews'
+    model = Review

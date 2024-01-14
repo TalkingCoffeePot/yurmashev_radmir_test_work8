@@ -56,6 +56,11 @@
                     <span class="fs-4 fw-medium">{{review.get_author}} | {{review.get_author.email}}</span>
                     <p>{{review.text}}</p>
                     <h4>Оценка: {{review.rate}}</h4>
+                    <div class="col-6 mb-5">
+                        <h4>Средняя оценка: {{product.get_avg_rate}}</h4>
+                        <a href="{% url 'review_edit' product.pk review.pk %}" class="btn btn-primary">Редактировать</a>
+                        <a href="{% url 'review_delete' product.pk review.pk %}" class="btn btn-danger">Удалить</a>
+                    </div>
                 </div>
                 <hr>
                 {% endif %} 

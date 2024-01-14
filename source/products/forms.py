@@ -20,6 +20,7 @@ class ReviewForm(ModelForm):
             'product',
             'text',
             'rate',
+            'moderate'
         ]
         widgets = {
             'text': Textarea(attrs={
@@ -30,3 +31,4 @@ class ReviewForm(ModelForm):
                 'class': 'btn btn-primary'
             })
         }
+

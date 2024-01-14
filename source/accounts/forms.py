@@ -1,6 +1,6 @@
 from django.contrib.auth.models import User
 from django import forms
-from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth.forms import UserCreationForm, UserChangeForm
 
 class NewUserForm(UserCreationForm):
     class Meta:
@@ -19,3 +19,12 @@ class NewUserForm(UserCreationForm):
         if len(cleaned_data['first_name']) < 1 and len(cleaned_data['last_name']) < 1:
             raise forms.ValidationError("Хотя бы одно поле ИМЕНИ должно быть заполнено")
         return cleaned_data
+    
+class UserEditForm(UserChangeForm):
+    class Meta:
+        model= User
+        fields = [
+            'first_name',
+            'last_name',
+            'email',
+        ]

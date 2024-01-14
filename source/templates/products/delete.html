@@ -2,18 +2,17 @@
 {% load static %}
 
 {% block title %}Detailed{% endblock %}
-{% block style %}{% static 'css/detailed.css' %}{% endblock %}
+{% block style %}{% static 'css/add_style.css' %}{% endblock %}
 
 {% block content %}
         <div class="task_box">
             <form action="" method="post">
                 {% csrf_token %}
-                <h1>Вы уверены, что хотите удалить задачу?</h1>
+                <h1>Вы уверены?</h1>
                 <div class="box">
                     <button type="submit" class="btn btn-primary">Да</button>
                     <a href="{% url 'product_list' %}" class="btn btn-danger">Нет</a>
                 </div>
-                
             </form>
         </div> 
 {% endblock %}

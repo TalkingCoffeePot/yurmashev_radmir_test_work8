@@ -18,6 +18,8 @@ class Products(models.Model):
     def get_avg_rate(self):
         this_reviews = self.p_review.filter(moderate=True)
         avg_sum = this_reviews.aggregate(Avg('rate'))
+        if avg_sum['rate__avg'] == None:
+            avg_sum['rate__avg'] = 0
         return avg_sum['rate__avg']
 
 
