@@ -10,6 +10,14 @@ class Products(models.Model):
         ('l', 'Ноутбук'),
         ('g', 'Видеокарта')
     )
+
+    class Meta:
+        permissions = [
+            ('edit_prod', 'Редактировать товар'),
+            ('delete_prod', 'Удалить товар'),
+            ('create_prod', 'Добавить товар')
+        ]
+
     title = models.CharField('Название', max_length=100)
     category = models.CharField('Категория', max_length=1, choices=CATEGORY)
     description = models.TextField('Описание', max_length=100)
@@ -31,6 +39,14 @@ class Review(models.Model):
         (4, '4'),
         (5, '5')
     )
+    class Meta:
+        permissions = [
+            ('edit_rev', 'Редактировать отзыв'),
+            ('delete_rev', 'Удалить отзыв'),
+            ('create_rev', 'Создать отзыв'),
+            ('moderate_rev', 'Модерация отзывов')
+        ]
+
     author = models.ForeignKey(User, verbose_name='Автор', related_name='a_review', on_delete=models.SET_NULL, blank=True, null=True)
     product = models.ForeignKey(Products, verbose_name='Продукт', related_name='p_review', on_delete=models.CASCADE, blank=True, null=True)
     text = models.TextField('Текст отзыва', max_length=1500)

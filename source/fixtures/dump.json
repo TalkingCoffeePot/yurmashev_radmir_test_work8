@@ -3,10 +3,10 @@
   "model": "products.products",
   "pk": 1,
   "fields": {
-    "title": "Poco F1 6/64",
+    "title": "Poco F1 6/64333",
     "category": "s",
     "description": "dwdwdadwdadsadwdas",
-    "image": "products/pocof1.jpg"
+    "image": "products/poco_Xcpi6NF.png"
   }
 },
 {
@@ -41,41 +41,54 @@
 },
 {
   "model": "products.review",
-  "pk": 19,
+  "pk": 33,
   "fields": {
     "author": 1,
     "product": 1,
-    "text": "говно",
-    "rate": 5,
+    "text": "fdsafasfsdafasf11111111111111",
+    "rate": 3,
     "moderate": true,
-    "date_add": "2024-01-13",
-    "date_edit": "2024-01-13"
+    "date_add": "2024-01-15",
+    "date_edit": "2024-01-15"
   }
 },
 {
   "model": "products.review",
-  "pk": 20,
+  "pk": 34,
   "fields": {
     "author": 1,
     "product": 1,
-    "text": "sgsfdgfdsg",
-    "rate": 4,
-    "moderate": false,
-    "date_add": "2024-01-13",
-    "date_edit": "2024-01-13"
-  }
-},
-{
-  "model": "products.review",
-  "pk": 21,
-  "fields": {
-    "author": 1,
-    "product": 1,
-    "text": "ggg",
+    "text": "fdsafasfsdafasf кал",
     "rate": 1,
     "moderate": false,
-    "date_add": "2024-01-14",
-    "date_edit": "2024-01-14"
+    "date_add": "2024-01-15",
+    "date_edit": "2024-01-15"
+  }
+},
+{
+  "model": "products.review",
+  "pk": 41,
+  "fields": {
+    "author": 2,
+    "product": 1,
+    "text": "fdsafsdgregregefsdfsadfsadfsdafdfdfdfd",
+    "rate": 3,
+    "moderate": true,
+    "date_add": "2024-01-15",
+    "date_edit": "2024-01-15"
+  }
+},
+{
+  "model": "products.review",
+  "pk": 42,
+  "fields": {
+    "author": 3,
+    "product": 3,
+    "text": "fdsfafsdafasdfasdfsa",
+    "rate": 1,
+    "moderate": false,
+    "date_add": "2024-01-15",
+    "date_edit": "2024-01-15"
   }
 }
 ]

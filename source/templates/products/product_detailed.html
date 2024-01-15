@@ -5,64 +5,70 @@
 {% block style %}{% static 'css/main_style.css' %}{% endblock %}
 {% block content %}
         <div class="task_container mt-5">
-            <div class=" prod_card row">
+            <div class=" prod_card row mb-3">
                 <div class="col-6">
                     <img src="{{product.image.url}}" class="img-thumbnail" alt="...">
                 </div>
                 
                 <div class="col-6">
-                    <p class="">{{product.category}}</p>
+                    <p class="">{{product.get_category_display}}</p>
                     <h5 class="">{{product.title}}</h5>
                     <p class="">{{product.description}}</p>
                 </div>
                 <div class="col-6 mb-5">
                     <h4>Средняя оценка: {{product.get_avg_rate}}</h4>
-                    <a href="{% url 'update_product' product.pk %}" class="btn btn-primary">Редактировать</a>
-                    <a href="{% url 'delete_product' product.pk %}" class="btn btn-danger">Удалить</a>
+                    {% if perms.products.delete_prod and perms.products.edit_prod %}
+                        <a href="{% url 'update_product' product.pk %}" class="btn btn-primary">Редактировать</a>
+                        <a href="{% url 'delete_product' product.pk %}" class="btn btn-danger">Удалить</a>
+                    {% endif %}
                 </div>
               </div>
 
-              {% if user.is_authenticated %}
-              <h3 id="write_comment">Написать комментарий</h3>
-              <form method="post">
-              {% csrf_token %}
-              <div class="row">
-                    <div class="col-10">
-                        {{form.text}}
+                {% if perms.products.create_rev %}
+                    <h3 id="write_comment">Написать комментарий</h3>
+                    <form method="post">
+                        {% csrf_token %}
+                        <div class="row">
+                            <div class="col-10">
+                                {{form.text}}
+                            </div>
+                            <div class="col-2">
+                                <h6>Ваша оценка</h6>
+                                {{form.rate}}
+                            </div>
+                        </div>
+                        <button type="submit" class="btn btn-primary mt-3 mb-3">Комментировать</button>
+                    </form>
+                {% else %}
+                    {% if not user.is_authenticated %}
+                    <div class="panel panel-warning mb-5 mt-5">
+
+                        <div class="panel-body">
+                            Только авторизованные пользователи могут оставлять комментарии.<br />
+                        </div>
                     </div>
-                    <div class="col-2">
-                        {{form.rate}}
-                    </div>
-                </div>
-                
-                <button type="submit" class="btn btn-primary">Комментировать</button>
-              </form>
-          {% else %}
-              <div class="panel panel-warning">
-                  <div class="panel-heading">
-                      <h3 class="panel-title">Комментарии</h3>
-                  </div>
-                  <div class="panel-body">
-                      Только авторизованные пользователи могут оставлять комментарии.<br />
-                  </div>
-              </div>
-              {% endif %}
-            
-            <h2>Комментарии</h2>
+                    {% endif %}
+                {% endif %}
+            <h3 class="panel-title">Отзывы</h3>
             <div class="prod_comments px-3">
             {% for review in product.p_review.all %}
-                {% if review.moderate %}
+                {% if perms.products.moderate_rev %}
                 <div class="task_box">
-                    <span class="fs-4 fw-medium">{{review.get_author}} | {{review.get_author.email}}</span>
+                    <span class="fs-4 fw-medium"><a href="{% url 'accounts:profile' review.get_author.pk %}">{{review.get_author}}</a> | {{review.get_author.email}}</span>
                     <p>{{review.text}}</p>
                     <h4>Оценка: {{review.rate}}</h4>
-                    <div class="col-6 mb-5">
-                        <h4>Средняя оценка: {{product.get_avg_rate}}</h4>
-                        <a href="{% url 'review_edit' product.pk review.pk %}" class="btn btn-primary">Редактировать</a>
-                        <a href="{% url 'review_delete' product.pk review.pk %}" class="btn btn-danger">Удалить</a>
-                    </div>
+                    <h6>На модерации</h6>
                 </div>
                 <hr>
+                {% else %}
+                    {% if review.moderate %}
+                    <div class="task_box">
+                        <span class="fs-4 fw-medium"><a href="{% url 'accounts:profile' review.get_author.pk %}">{{review.get_author}}</a> | {{review.get_author.email}}</span>
+                        <p>{{review.text}}</p>
+                        <h4>Оценка: {{review.rate}}</h4>
+                    </div>
+                    <hr>
+                    {% endif %}
                 {% endif %} 
             {% empty %}
                 <p>Отзывов пока нет</p>

@@ -8,6 +8,7 @@ from django.shortcuts import get_object_or_404
 from products.forms import ProductForm, ReviewForm
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView, View
 from django.views.generic.edit import FormMixin, FormView
+from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
 # Create your views here.
 
 class ProductListView(ListView):
@@ -16,6 +17,7 @@ class ProductListView(ListView):
     model = Products
 
 class ProductDetailedView(FormMixin, DetailView):
+    
     template_name = 'products/product_detailed.html'
     model = Products
     form_class = ReviewForm
@@ -44,51 +46,38 @@ class ProductDetailedView(FormMixin, DetailView):
         return super().form_valid(form)
 
 
-class ProductCreateView(CreateView):
+class ProductCreateView(PermissionRequiredMixin, CreateView):
+    
     template_name = 'products/product_create.html'
     form_class = ProductForm
+    permission_required = 'products.create_prod'
+
     def get_success_url(self):
         return reverse('product_list')
     
-class ProductUpdateView(UpdateView):
+class ProductUpdateView(PermissionRequiredMixin, UpdateView):
+    
     model = Products
     template_name = 'products/product_update.html'
     pk_url_kwarg = 'product_pk'
     form_class = ProductForm
     context_object_name = 'product'
-    #permission_required = 'main_app.change_projects'
+    permission_required = 'products.edit_prod'
 
     def get_success_url(self):
         return reverse('detailed_product', kwargs={'product_pk': self.object.pk})
     
-class ProductDeleteView(DeleteView):
+class ProductDeleteView(PermissionRequiredMixin, DeleteView):
+    
     template_name = 'products/delete.html'
     pk_url_kwarg = 'product_pk'
     model = Products
     context_object_name = 'product'
     success_url = reverse_lazy('product_list')
-    #permission_required = 'main_app.delete_projects'
-
-
-class ReviewEdit(UpdateView):
-    model = Review
-    template_name = 'products/review_edit.html'
-    pk_url_kwarg = 'review_pk'
-    form_class = ReviewForm
-    context_object_name = 'review'
-
-class ReviewDelete(DeleteView):
-    model = Review
-    template_name = 'products/delete.html'
-    pk_url_kwarg = 'review_pk'
-    context_object_name = 'review'
-
-    def get_success_url(self, **kwargs) -> str:
-        return reverse_lazy('detailed_product', kwargs={'product_pk': self.kwargs.get('product_pk')})
+    permission_required = 'products.delete_prod'
     
-
-
-class ModerateViews(ListView):
+class ModerateViews(PermissionRequiredMixin, ListView):
+    permission_required = 'products.moderate_rev'
     template_name = 'accounts/moderate_page.html'
     context_object_name = 'reviews'
     model = Review

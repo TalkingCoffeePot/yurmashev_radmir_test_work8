@@ -9,15 +9,23 @@
     {% csrf_token %}
     <div class="row">
         <div class="col-10">
+            {{review.author.username}} | {{review.product.title}}
+        </div>
+        <div class="col-10">
             {{form.text}}
         </div>
         <div class="col-2">
             {{form.rate}}
         </div>
-        
+        <div hidden>
+            {{form.author}}
+            {{form.product}}
+        </div>
+        {% if perms.products.moderate_rev %}
         <div class="col-2 fs-4 fw-medium">
             Модерация {{form.moderate}}
         </div>
+        {% endif %}
     </div>
 <p><input class="btn btn-secondary mt-3 mb-3" type="submit" value="Подтвердить"></p>
 </form>
