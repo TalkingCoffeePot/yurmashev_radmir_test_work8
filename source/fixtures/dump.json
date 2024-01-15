@@ -30,42 +30,6 @@
   }
 },
 {
-  "model": "products.products",
-  "pk": 4,
-  "fields": {
-    "title": "ddddddd",
-    "category": "s",
-    "description": "fdsfsefefgesgbsbgsdfbg",
-    "image": "products/5ec326fab909b0546561d8277acfa384.jpg"
-  }
-},
-{
-  "model": "products.review",
-  "pk": 33,
-  "fields": {
-    "author": 1,
-    "product": 1,
-    "text": "fdsafasfsdafasf11111111111111",
-    "rate": 3,
-    "moderate": true,
-    "date_add": "2024-01-15",
-    "date_edit": "2024-01-15"
-  }
-},
-{
-  "model": "products.review",
-  "pk": 34,
-  "fields": {
-    "author": 1,
-    "product": 1,
-    "text": "fdsafasfsdafasf кал",
-    "rate": 1,
-    "moderate": false,
-    "date_add": "2024-01-15",
-    "date_edit": "2024-01-15"
-  }
-},
-{
   "model": "products.review",
   "pk": 41,
   "fields": {
@@ -86,7 +50,20 @@
     "product": 3,
     "text": "fdsfafsdafasdfasdfsa",
     "rate": 1,
-    "moderate": false,
+    "moderate": true,
+    "date_add": "2024-01-15",
+    "date_edit": "2024-01-15"
+  }
+},
+{
+  "model": "products.review",
+  "pk": 43,
+  "fields": {
+    "author": 2,
+    "product": 1,
+    "text": "fafewfaegferagvsae",
+    "rate": 5,
+    "moderate": true,
     "date_add": "2024-01-15",
     "date_edit": "2024-01-15"
   }
